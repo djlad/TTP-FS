@@ -1,0 +1,5 @@
+docker run --name webstocksdb \
+    -p 5432:5432 \
+    -e POSTGRES_DB=testdatabase \
+    -e POSTGRES_PASSWORD=codingisfun29^ \
+    -d postgres
