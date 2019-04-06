@@ -6,7 +6,7 @@ from .database import db
 
 
 class Model(db.Model):
-    id = Column(Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
     last_updated_by = Column(String)

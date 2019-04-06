@@ -2,14 +2,17 @@
 
 from sqlalchemy import Column, String
 
-from .model import Model
+#from .model import Model
 
 from flask_user import UserMixin
 from .database import db
 
+#from .transaction import Transaction
 
-class UserModel(Model, UserMixin):
+
+class UserModel(db.Model, UserMixin):
     __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
 
     # User Authentication fields
     email = db.Column(db.String(255), nullable=False, unique=True)
@@ -17,4 +20,7 @@ class UserModel(Model, UserMixin):
     password = db.Column(db.String(255), nullable=False)
 
     # User fields
-    active = db.Column(db.Boolean()),
+    active = db.Column(db.Boolean())
+
+    #relationships
+    transactions = db.relationship("Transaction", backref="UserModel")

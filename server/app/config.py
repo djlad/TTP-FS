@@ -8,6 +8,8 @@ class DefaultConfig(object):
     USER_ENABLE_EMAIL = True
     USER_ENABLE_USERNAME = False
     USER_REQUIRE_RETYPE_PASSWORD = False
+    #USER_ALLOW_LOGIN_WITHOUT_CONFIRMED_EMAIL = True
+    USER_LOGOUT_URL = '/sign-out'
 
     USER_EMAIL_SENDER_EMAIL = 'helpdesk@webstocks.com'
 

@@ -5,6 +5,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from .models.database import db
 from .models.usermodel import UserModel
+from .models.transaction import Transaction
 
 from flask_user import UserManager
 
@@ -26,8 +27,7 @@ def create_app_db(db):
         MAIL_PORT=587,
         MAIL_USE_TLS=True,
         MAIL_USERNAME = 'danieljladner@gmail.com',
-        #MAIL_PASSWORD = "kjgtlwperueccznq"
-        MAIL_PASSWORD = "Don'thackmycomp97"
+        MAIL_PASSWORD = "kjgtlwperueccznq"
 	)
     #mail = Mail(app)
 
@@ -57,18 +57,27 @@ def create_app_db(db):
     
 
     #initialize database
-    try:
-        db.drop_all()
-    except:
-        pass
+    #try:
+    #    db.drop_all()
+    #except:
+    #    print("couldn't drop")
+    #    pass
 
     db.create_all()
+    #addTransaction(db, 0)
+
 
     #add routes
     app.register_blueprint(login_routes)
 
-
     return app
 
-#db = SQLAlchemy()
+def addTransaction(db, buyerId):
+    new_transaction = Transaction()
+    new_transaction.buyerId = buyerId
+    db.session.add(new_transaction)
+    db.session.commit()
+    return True
+    
+
 app = create_app_db(db)
