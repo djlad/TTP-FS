@@ -2,11 +2,13 @@ from flask import Blueprint
 from flask_user import login_required, current_user
 from flask import Flask, request, render_template_string, render_template
 
+from services import get_stocks
+
 login_routes = Blueprint('login_routes', __name__, template_folder='templates')
 
 @login_routes.route('/stocks')
 @login_required
-def login():
+def stocks_page():
     print('login route')
     print(current_user)
     return render_template('stocks.html', user=current_user)
