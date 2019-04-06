@@ -13,7 +13,7 @@ class DefaultConfig(object):
 
     USER_EMAIL_SENDER_EMAIL = 'helpdesk@webstocks.com'
 
-    SECRET_KEY = 'Insecure Development Key'
+    SECRET_KEY = 'Insecure Development Key asdoincpqoiejrpqoiwejrpqoiejrpqowiejpoimpxozicjzxpcivj'
 
     MAIL_SERVER : 'smtp.gmail.com'
     MAIL_PORT : 465

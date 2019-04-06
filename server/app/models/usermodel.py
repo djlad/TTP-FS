@@ -22,5 +22,10 @@ class UserModel(db.Model, UserMixin):
     # User fields
     active = db.Column(db.Boolean())
 
+    # App specific fields
+    # Web Stocks App:
+    balance = db.Column(db.Float, nullable=True, default=5000.0)
+    currency_type = db.Column(db.String(10), nullable=True, default="USD")
+
     #relationships
     transactions = db.relationship("Transaction", backref="UserModel")

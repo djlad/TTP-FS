@@ -3,23 +3,21 @@ from routes.routes import login_routes
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from .models.database import db
-from .models.usermodel import UserModel
-from .models.transaction import Transaction
+from models.database import db
+from models.usermodel import UserModel
+from models.transaction import Transaction
 
 from flask_user import UserManager
 
 from flask_mail import Mail, Message
 
-print("fac file")
 def create_app_db(db):
-    print("flask factory running")
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
     # load the instance config, if it exists, when not testing
     #app.config.from_pyfile('config.py', silent=True)
-    app.config.from_object("app.config.DefaultConfig")
+    app.config.from_object("config.DefaultConfig")
 
     app.config.update(
         DEBUG=True, #EMAIL SETTINGS
