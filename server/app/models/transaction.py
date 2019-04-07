@@ -6,4 +6,4 @@ class Transaction(db.Model):
     symbol = db.Column(db.String(10), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     transactionPrice = db.Column(db.Float, nullable=False)
-    buyerId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    buyerId = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)

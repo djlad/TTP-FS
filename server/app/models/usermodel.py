@@ -11,7 +11,7 @@ from .database import db
 
 
 class UserModel(db.Model, UserMixin):
-    __tablename__ = 'user'
+    __tablename__ = 'app_user'
     id = db.Column(db.Integer, primary_key=True)
 
     # User Authentication fields

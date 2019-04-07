@@ -1,6 +1,6 @@
 <!doctype html>
 <title>Web Stocks App</title>
-<h1>Portfolio ({{user.balance}})</h1>
+<h1>Portfolio ({{user.balance}} {{user.currency_type}})</h1>
 <h3>{{ user.email }}</h3>
 
 {% for transaction in user.transactions %}
