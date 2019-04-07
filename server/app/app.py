@@ -42,7 +42,8 @@ def create_app_db(db):
     db_name = app.config['DB_NAME']
 
     #connect to database using flask's sql alchemy
-    sqlalchemyuri = f'postgresql://{db_user}:{db_password}@{db_url}/{db_name}'
+    #sqlalchemyuri = f'postgresql://{db_user}:{db_password}@{db_url}/{db_name}'
+    sqlalchemyuri  = 'postgresql://'+db_user+':'+db_password+'@'+db_url+'/'+db_name
     app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemyuri
 
 

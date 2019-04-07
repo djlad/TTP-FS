@@ -1,9 +1,28 @@
 <!doctype html>
 <title>Web Stocks App</title>
-<h1>{{ user.email }}!</h1>
-<h1>Stocks {{ user.transactions }}!</h1>
-{% if user.name %}
-  <h1>Hello {{ user.currency_type}}!</h1>
-{% else %}
-  <h1>Hello</h1>
-{% endif %}
+<h1>Portfolio ({{user.balance}})</h1>
+<h3>{{ user.email }}</h3>
+
+{% for transaction in user.transactions %}
+<h1>{{ transaction.symbol }} {{transaction.quantity}}</h1>
+{% endfor %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio.css') }}">
+</head>
+<body>
+
+    <form class="myForm" method="POST" enctype="application/x-www-form-urlencoded" action="/buy">
+        <p><input type="text" name="symbol" placeholder="Stock Symbol"></p>
+        <p><input type="number" name="quantity" placeholder="Quantity"></p>
+        <p><button>Purchase Stock</button></p>
+    </form>
+
+</body>
+</html>

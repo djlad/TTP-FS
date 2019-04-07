@@ -4,7 +4,7 @@ import json
 
 base_url = 'https://api.iextrading.com/1.0'
 
-def get_stocks(symbol):
+def get_stock(symbol):
     '''
     Gets Quote for given stock ticker
 

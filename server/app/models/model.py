@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from .database import db
 
-
+'''
 class Model(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = Column(DateTime)
@@ -13,4 +13,4 @@ class Model(db.Model):
 
     def __init__(self):
         self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.now()'''
