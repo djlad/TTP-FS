@@ -39,7 +39,14 @@
                     <th>Total Value ({{(user.currency_type)}})</th>
                   </tr>
                 {% for holding in holdings%}
-                    <tr>
+                    {% if quotes[loop.index-1].latestPrice > quotes[loop.index-1].open %}
+                    <tr style="color:green">
+                    {% elif quotes[loop.index-1].latestPrice < quotes[loop.index-1].open %}
+                    <tr style="color:red">
+                    {% else %}
+                    <tr style="color:grey">
+                    {% endif %}
+                    
                       <td>{{ holding.symbol }}</td>
                       <td>{{holding.quantity}}</td> 
                       <td>{{quotes[loop.index-1].latestPrice}}</td>
