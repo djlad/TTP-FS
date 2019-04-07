@@ -4,7 +4,7 @@
 <h3>{{ user.email }}</h3>
 
 {% for transaction in user.transactions %}
-<h1>{{ transaction.symbol }} {{transaction.quantity}}</h1>
+<p>{{ transaction.symbol }} - {{transaction.quantity}} Shares </p>
 {% endfor %}
 
 <!DOCTYPE html>

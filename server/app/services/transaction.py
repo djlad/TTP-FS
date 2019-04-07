@@ -8,7 +8,7 @@ def make_purchase(symbol, quantity, buyerId):
     quote = get_stock(symbol)
 
     if quote.error:
-        return False
+        return quote.error
     
     new_purchase = Transaction()
     new_purchase.symbol = symbol
@@ -18,4 +18,10 @@ def make_purchase(symbol, quantity, buyerId):
     db.session.add(new_purchase)
     db.session.commit()
 
-    return True
+    return ""
+
+def sum_transactions(userId):
+    ''' Sums up transactions for displaying
+        current shares in a portfolio'''
+    portfolio = Transaction.query().filter(buyerId=userId).group_by(buyerId=userId)
+    return portfolio
