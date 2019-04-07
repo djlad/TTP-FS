@@ -8,16 +8,20 @@ from services.transaction import make_purchase, sum_transactions
 
 login_routes = Blueprint('login_routes', __name__, template_folder='templates')
 
-@login_routes.route('/stocks')
+@login_routes.route('/')
 @login_required
-def stocks_page():
+def stocks_page(transaction_message=""):
     holdings = sum_transactions(current_user.id)
     quotes = []
     for holding in holdings:
         quotes.append(get_stock.get_stock(holding.symbol))
-    return render_template('stocks.html', user=current_user, holdings=holdings, quotes=quotes)
+    return render_template('stocks.html',
+                           user=current_user, 
+                           holdings=holdings, 
+                           quotes=quotes,
+                           transaction_message=transaction_message)
 
-@login_routes.route('/')
+@login_routes.route('/fuser')
 def index():
     return render_template_string("""
             {% extends "flask_user_layout.html" %}
@@ -40,6 +44,11 @@ def buy_stock():
     message = make_purchase(ticker, quantity, current_user.id)
 
     if not message:
-        return "purchase successful"
+        message = "Purchase Successful"
     else:
-        return "purchase failed: " + message
+        message = "Purchase Failed: " + message
+    
+    if "render" in request.form:
+        return stocks_page(message)
+    
+    return message
