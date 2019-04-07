@@ -8,6 +8,14 @@ class TestMakeTransaction(unittest.TestCase):
         app = create_app_test('config.DefaultConfig')
         app.app_context().push()
         transaction.make_purchase("aapl", 11, 1)
+    
+    def test_get_num_stocks(self):
+        app = create_app_test('config.DefaultConfig')
+        app.app_context().push()
+        ns = transaction.get_num_stocks('AAPL', 1)
+        print(ns)
+        self.assertTrue(ns > 0)
+
 
 if __name__ == "__main__":
     unittest.main()

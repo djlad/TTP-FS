@@ -5,14 +5,62 @@ from services.get_stock import get_stock
 
 from sqlalchemy.sql import func
 
+def buy_stocks(quantity, userId, latestPrice):
+    """Subtract or add funds if user has enough money"""
+    if int(quantity) < 0:
+        return "Can not buy negative shares."
+    user = UserModel.query.get(userId)
+    totalcost = float(quantity) * latestPrice
+    if user.balance < totalcost:
+        return "Insufficient Funds"
+    user.balance -= totalcost
+    db.session.add(user)
+    db.session.commit()
+    return ""
+
+def get_num_stocks(symbol, userId):
+    '''return number of symbol shares owned by userId'''
+    symbol = symbol.upper()
+    shares = db.session.query(func.sum(Transaction.quantity)).filter(Transaction.buyerId == userId,
+                                                                     Transaction.symbol == symbol)
+    if shares:
+        return shares.scalar()
+    else:
+        return 0
+
+
+def sell_stocks(quantity, userId, latestPrice, symbol):
+    """Subtract or add funds if user has enough money
+       quantity must be zero or negative"""
+    if float(quantity) > 0:
+        return "Quantity of shares to sell must be negative."
+    if get_num_stocks(symbol, userId) + quantity < 0:
+        return "Insufficient Shares"
+    user = UserModel.query.get(userId)
+    totalcost = quantity * latestPrice
+    user.balance -= totalcost
+    db.session.add(user)
+    db.session.commit()
+    return ""
+
 
 def make_purchase(symbol, quantity, buyerId):
+    '''make purchase or sale of stocks
+       RETURNS String: contains errors. empty if no errors occur.'''
+    print("quantity")
+    print(quantity)
     symbol = symbol.upper()
     quote = get_stock(symbol)
-
+    quantity = int(quantity)
     if quote.error:
         return quote.error
-    
+    if quantity > 0:
+        error = buy_stocks(quantity, buyerId, quote.latestPrice)
+    else:
+        error = sell_stocks(quantity, buyerId, quote.latestPrice, symbol)
+    if error:
+        return error
+        
     new_purchase = Transaction()
     new_purchase.symbol = symbol
     new_purchase.quantity = quantity

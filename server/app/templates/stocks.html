@@ -58,8 +58,8 @@
             <div class="col-md-6">
               <div>Make Transaction:</div>
               <form class="myForm" method="POST" enctype="application/x-www-form-urlencoded" action="/buy">
-                  <p><input type="text" name="symbol" placeholder="Stock Symbol"></p>
-                  <p><input type="number" name="quantity" placeholder="Quantity"></p>
+                  <p><input required type="text" name="symbol" placeholder="Stock Symbol"></p>
+                  <p><input required type="number" name="quantity" placeholder="Quantity"></p>
                   <input type="text" style="display:none" name="render" value="True">
                   <p><button>Purchase Stock</button></p>
                   <p>{{transaction_message}}</p>
