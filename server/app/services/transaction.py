@@ -29,5 +29,5 @@ def sum_transactions(userId):
     portfolio = db.session.query(Transaction.symbol, func.sum(Transaction.quantity).label('quantity'))
     portfolio = portfolio.filter(Transaction.buyerId == userId)
     portfolio = portfolio.group_by(Transaction.symbol)
-    print(portfolio)
+    portfolio = portfolio.having(func.sum(Transaction.quantity) > 0)
     return portfolio
