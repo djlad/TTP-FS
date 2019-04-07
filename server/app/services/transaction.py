@@ -6,7 +6,7 @@ from services.get_stock import get_stock
 from sqlalchemy.sql import func
 
 def buy_stocks(quantity, userId, latestPrice):
-    """Subtract or add funds if user has enough money"""
+    """removes funds if user has enough money to buy shares"""
     if int(quantity) < 0:
         return "Can not buy negative shares."
     user = UserModel.query.get(userId)
@@ -30,7 +30,7 @@ def get_num_stocks(symbol, userId):
 
 
 def sell_stocks(quantity, userId, latestPrice, symbol):
-    """Subtract or add funds if user has enough money
+    """add funds if user has shares to sell.
        quantity must be zero or negative"""
     if float(quantity) > 0:
         return "Quantity of shares to sell must be negative."
@@ -45,7 +45,8 @@ def sell_stocks(quantity, userId, latestPrice, symbol):
 
 
 def make_purchase(symbol, quantity, buyerId):
-    '''make purchase or sale of stocks
+    '''make purchase or sale of stocks. 
+       If quantity is negative this function becomes a sale instead of purchase.
        RETURNS String: contains errors. empty if no errors occur.'''
     print("quantity")
     print(quantity)
