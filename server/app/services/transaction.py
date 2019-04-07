@@ -2,9 +2,12 @@ from models.usermodel import UserModel
 from models.transaction import Transaction
 from models.database import db
 from services.get_stock import get_stock
-from services.get_stock import get_stock
+
+from sqlalchemy.sql import func
+
 
 def make_purchase(symbol, quantity, buyerId):
+    symbol = symbol.upper()
     quote = get_stock(symbol)
 
     if quote.error:
@@ -23,5 +26,8 @@ def make_purchase(symbol, quantity, buyerId):
 def sum_transactions(userId):
     ''' Sums up transactions for displaying
         current shares in a portfolio'''
-    portfolio = Transaction.query().filter(buyerId=userId).group_by(buyerId=userId)
+    portfolio = db.session.query(Transaction.symbol, func.sum(Transaction.quantity).label('quantity'))
+    portfolio = portfolio.filter(Transaction.buyerId == userId)
+    portfolio = portfolio.group_by(Transaction.symbol)
+    print(portfolio)
     return portfolio

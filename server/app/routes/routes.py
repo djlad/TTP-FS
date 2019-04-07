@@ -4,14 +4,18 @@ from flask import Flask, request, render_template_string, render_template
 from flask import request
 
 from services import get_stock
-from services.transaction import make_purchase
+from services.transaction import make_purchase, sum_transactions
 
 login_routes = Blueprint('login_routes', __name__, template_folder='templates')
 
 @login_routes.route('/stocks')
 @login_required
 def stocks_page():
-    return render_template('stocks.html', user=current_user)
+    holdings = sum_transactions(current_user.id)
+    quotes = []
+    for holding in holdings:
+        quotes.append(get_stock.get_stock(holding.symbol))
+    return render_template('stocks.html', user=current_user, holdings=holdings, quotes=quotes)
 
 @login_routes.route('/')
 def index():

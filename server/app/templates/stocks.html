@@ -7,6 +7,11 @@
 <p>{{ transaction.symbol }} - {{transaction.quantity}} Shares </p>
 {% endfor %}
 
+<h3>Holdings:</h3>
+{% for holding in holdings%}
+<p>{{ holding.symbol }} - {{holding.quantity}} Shares - {{quotes[loop.index-1].latestPrice}}</p>
+{% endfor %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
