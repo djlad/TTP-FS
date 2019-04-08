@@ -11,6 +11,19 @@ from models.usermodel import UserModel
 from models.transaction import Transaction
 
 
+from flask_user.forms import RegisterForm
+from wtforms import StringField
+from wtforms.validators import DataRequired
+
+class NameRegisterForm(RegisterForm):
+    name = StringField('name', validators=[DataRequired('First name is required')])
+
+class NameUserManager(UserManager):
+    def customize(self, app):
+        # Configure customized forms
+        self.RegisterFormClass = NameRegisterForm
+
+
 def create_app_db(db, test_config=""):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -21,15 +34,6 @@ def create_app_db(db, test_config=""):
         app.config.from_object("config.DefaultConfig")
     else:
         app.config.from_object(test_config)
-
-    app.config.update(
-        DEBUG=True, #EMAIL SETTINGS
-        MAIL_SERVER='smtp.gmail.com',
-        MAIL_PORT=587,
-        MAIL_USE_TLS=True,
-        MAIL_USERNAME = 'danieljladner@gmail.com',
-        MAIL_PASSWORD = "kjgtlwperueccznq"
-	)
     #mail = Mail(app)
 
     # ensure the instance folder exists
@@ -55,7 +59,8 @@ def create_app_db(db, test_config=""):
     app.app_context().push()
     
     #initialize flask user for authentication
-    user_manager = UserManager(app, db, UserModel)
+    #user_manager = UserManager(app, db, UserModel) #register_form=nameRegisterForm)
+    user_manager = NameUserManager(app, db, UserModel) #register_form=nameRegisterForm)
     
 
     #initialize database

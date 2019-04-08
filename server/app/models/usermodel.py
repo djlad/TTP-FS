@@ -21,6 +21,7 @@ class UserModel(db.Model, UserMixin):
 
     # User fields
     active = db.Column(db.Boolean())
+    name = db.Column(db.String(50), default='')
 
     # App specific fields
     # Web Stocks App:
